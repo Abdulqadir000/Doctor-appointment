@@ -1,9 +1,20 @@
 import { Button } from "@/components/ui/button";
+import { auth, signIn } from "../../../auth";
+import { redirect } from "next/navigation";
 
-export default function Signin(){
-    return (
-        <div className="container mx-auto min-h-screen flex justify-center items-center">
-            <Button>Continue with Google</Button>
-        </div>
-    )
+export default async function Signin() {
+  const session = await auth();
+  if (session) redirect("/");
+  return (
+    <div className="container mx-auto min-h-screen flex justify-center items-center">
+      <form
+        action={async () => {
+          "use server";
+          await signIn("google");
+        }}
+      >
+        <Button>Continue with Google</Button>
+      </form>
+    </div>
+  );
 }

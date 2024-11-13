@@ -10,10 +10,10 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-
-
-export default function Navbar() {
-  const session = { name: "Bilal" };
+import { auth, signOut } from "../../auth";
+import Image from "next/image";
+export default async function Navbar() {
+  const session = await auth();
   return (
     <div className="shadow-md py-3">
       <div className="flex container mx-auto justify-between">
@@ -22,10 +22,13 @@ export default function Navbar() {
           <Menubar>
             <MenubarMenu>
               <MenubarTrigger>
-                <Avatar>
-                  <AvatarImage src="https://github.com/shadcn.png" />
-                  <AvatarFallback>DAS</AvatarFallback>
-                </Avatar>
+                <Image
+                  src={session?.user?.image}
+                  alt="User Avatar"
+                  height={40}
+                  width={40}
+                  className="rounded-full"
+                />
               </MenubarTrigger>
               <MenubarContent>
                 <Link href={"/profile"}>
@@ -37,7 +40,14 @@ export default function Navbar() {
                 </Link>
 
                 <MenubarSeparator />
-                <MenubarItem>Logout</MenubarItem>
+                <form
+                  action={async () => {
+                    "use server";
+                    await signOut("google");
+                  }}
+                >
+                  <Button variant={"outline"}>Logout</Button>
+                </form>
               </MenubarContent>
             </MenubarMenu>
           </Menubar>

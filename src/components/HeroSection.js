@@ -1,8 +1,11 @@
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
+import { auth } from "../../auth";
 
-const HeroSection = () => {
+ async function HeroSection () {
+  const session = await auth();
+
   return (
     <section className="text-gray-600 my-10 body-font">
       <div className="container mx-auto flex md:flex-row flex-col items-center">
@@ -19,7 +22,7 @@ const HeroSection = () => {
             hexagon try-hard chambray.
           </p>
           <div className="flex justify-center">
-            <Link href={"/doctors/apply"}>
+            <Link href={session ? "/doctors/apply" : "/signin"}>
               <Button>Apply as a Doctor</Button>
             </Link>
           </div>
