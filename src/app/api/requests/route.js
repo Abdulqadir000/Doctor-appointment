@@ -1,10 +1,7 @@
 import connectDB from "@/lib/connectDB";
 import { RequestModal } from "@/lib/models/RequestModal";
-<<<<<<< HEAD
-=======
 import { UserModal } from "@/lib/models/UserModal";
 
->>>>>>> 0f0d38c (book appointment)
 export async function POST(req) {
   await connectDB();
   try {
@@ -48,9 +45,6 @@ export async function POST(req) {
 
 export async function GET(req) {
   await connectDB();
-<<<<<<< HEAD
-  const requests = await RequestModal.find().populate("user");
-=======
   // console.log(req);
   const query = {};
   const status = req?.nextUrl?.searchParams?.get("status");
@@ -59,7 +53,6 @@ export async function GET(req) {
   }
 
   const requests = await RequestModal.find(query).populate("user");
->>>>>>> 0f0d38c (book appointment)
   return Response.json(
     {
       error: false,
@@ -75,12 +68,9 @@ export async function PUT(req) {
   try {
     const obj = await req.json();
     let { id, status } = obj;
-<<<<<<< HEAD
-=======
     const request = await RequestModal.findOne({ _id: id });
 
     await UserModal.findOneAndUpdate({ _id: request.user }, { role: "doctor" });
->>>>>>> 0f0d38c (book appointment)
     const updated = await RequestModal.findOneAndUpdate(
       {
         _id: id,
@@ -107,8 +97,4 @@ export async function PUT(req) {
   }
 }
 
-<<<<<<< HEAD
 export async function DELETE(req) {}
-=======
-export async function DELETE(req) {}
->>>>>>> 0f0d38c (book appointment)
