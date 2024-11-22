@@ -1,5 +1,10 @@
 "use server";
 
+<<<<<<< HEAD
+=======
+import { revalidatePath } from "next/cache";
+
+>>>>>>> 0f0d38c (book appointment)
 export async function addRequest(data) {
   let add = await fetch(`${process.env.BASE_URL}api/requests`, {
     method: "POST",
@@ -10,9 +15,37 @@ export async function addRequest(data) {
   return add;
 }
 
+<<<<<<< HEAD
 // export async function getRequest() {
 //     let requests = await fetch(`${process.env.BASE_URL}api/requests`);
 //     requests = requests.json();
   
 //     return requests;
 //   }
+=======
+export async function getRequest(status) {
+  let requests = await fetch(
+    `${process.env.BASE_URL}api/requests?status=${status ? status : ""}`
+  );
+  requests = requests.json();
+
+  return requests;
+}
+
+export async function getSingleRequest(id) {
+  let request = await fetch(`${process.env.BASE_URL}api/requests/${id}`);
+  request = request.json();
+
+  return request;
+}
+
+export async function updateRequest(id, status) {
+  let requests = await fetch(`${process.env.BASE_URL}api/requests`, {
+    method: "PUT",
+    body: JSON.stringify({ id, status }),
+  });
+  requests = requests.json();
+  revalidatePath("/admin/requests");
+  return requests;
+}
+>>>>>>> 0f0d38c (book appointment)

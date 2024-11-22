@@ -5,6 +5,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+<<<<<<< HEAD
 import { categories, doctors } from "@/lib/doctorCategories";
 
 import {
@@ -22,6 +23,18 @@ import { HomeIcon, ClockIcon, PlusIcon } from "@radix-ui/react-icons";
 
 export default function DoctorsSection({ isHome }) {
   const filtered = isHome ? doctors.slice(0, 6) : doctors;
+=======
+import { categories } from "@/lib/doctorCategories";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { getRequest } from "@/actions/requests";
+import DoctorCard from "./DoctorCard";
+
+export default async function DoctorsSection({ isHome }) {
+  const { requests } = await getRequest("accepted");
+  console.log("requests=>", requests)
+
+>>>>>>> 0f0d38c (book appointment)
   return (
     <div>
       <div className="container mx-auto flex justify-between my-18 mt-5">
@@ -47,6 +60,7 @@ export default function DoctorsSection({ isHome }) {
       </div>
 
       <div className="grid grid-cols-1 mt-10 md:grid-cols-2 lg:grid-cols-3 gap-3 my-3">
+<<<<<<< HEAD
         {filtered.map((doctor) => (
           <Card key={doctor.id}>
             <CardHeader className={"flex flex-row"}>
@@ -91,6 +105,13 @@ export default function DoctorsSection({ isHome }) {
             </CardFooter>
           </Card>
         ))}
+=======
+       {
+        requests.map((request) => (
+          <DoctorCard key={request._id} request={request} isAdmin={false}/>
+        ))
+       }
+>>>>>>> 0f0d38c (book appointment)
       </div>
     </div>
   );

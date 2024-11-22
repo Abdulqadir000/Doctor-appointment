@@ -12,9 +12,33 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+<<<<<<< HEAD
 
 export function DatePicker() {
   const [date, setDate] = React.useState(new Date());
+=======
+import Link from "next/link";
+import { useToast } from "@/hooks/use-toast";
+import { addAppointment } from "@/actions/appointment";
+import { title } from "process";
+
+export function DatePicker({ session, request }) {
+  const [date, setDate] = React.useState(new Date());
+  const [loading, setLoading] = React.useState(false);
+  const { toast } = useToast();
+  const handleBookAppointment = async () => {
+    let isDateInFuture = Date.now() < new Date(date);
+    if (!isDateInFuture) {
+      return toast({ title: "Please select a date in the future" });
+    }
+    setLoading(true);
+    const obj = { user: session.user._id, request: request, date };
+    const response = await addAppointment(obj);
+    toast({
+      title: response.msg,
+    })
+  };
+>>>>>>> 0f0d38c (book appointment)
 
   return (
     <div className="my-4">
@@ -41,6 +65,18 @@ export function DatePicker() {
           />
         </PopoverContent>
       </Popover>
+<<<<<<< HEAD
+=======
+      {session ? (
+        <Button onClick={handleBookAppointment} className="w-full my-3">
+          Book your appointment
+        </Button>
+      ) : (
+        <Link className="w-full my-3" href={"/signin"}>
+          <Button className="w-full">Login to Book your appointment</Button>
+        </Link>
+      )}
+>>>>>>> 0f0d38c (book appointment)
     </div>
   );
 }
