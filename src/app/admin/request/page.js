@@ -1,14 +1,3 @@
-<<<<<<< HEAD
-
-
-export default async   function Request(){
-    return (
-        <div className="container mx-auto">  
-            <h1>Request an appointment</h1>
-            {/* Add your appointment form components here */}
-        </div>
-    )
-=======
 import { redirect } from "next/navigation";
 import { auth } from "../../../../auth";
 import { getRequest } from "@/actions/requests";
@@ -27,5 +16,4 @@ export default async function Requests({ searchParams }) {
       <DoctorRequests status={status} requests={requests} />
     </div>
   );
->>>>>>> 0f0d38c (book appointment)
 }
