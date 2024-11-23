@@ -16,7 +16,7 @@ export async function getRequest(status) {
   let requests = await fetch(
     `${process.env.BASE_URL}api/requests?status=${status ? status : ""}`
   );
-  requests = requests.json();
+  requests = await requests.json();
 
   return requests;
 }

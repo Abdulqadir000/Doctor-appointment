@@ -2,8 +2,9 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
 import { auth } from "../../auth";
+import heroImage from "/assets/DALL.png";
 
- async function HeroSection () {
+async function HeroSection() {
   const session = await auth();
 
   return (
@@ -12,14 +13,15 @@ import { auth } from "../../auth";
         <div className="lg:flex-grow md:w-3/4 md:pr-16 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center">
           <h1 className="font-semibold sm:text-2xl text-2xl mb-4 text-gray-900">
             Appoint Your Doctor
-            {/* <br className="hidden lg:inline-block" />
-            readymade gluten */}
           </h1>
           <p className="mb-8 leading-relaxed">
-            Copper mug try-hard pitchfork pour-over freegan heirloom neutra air
-            plant cold-pressed tacos poke beard tote bag. Heirloom echo park
-            mlkshk tote bag selvage hot chicken authentic tumeric truffaut
-            hexagon try-hard chambray.
+            Health is the foundation of happiness, and we’re here to make your
+            wellness journey seamless. Book appointments with top-rated doctors
+            in just a few clicks. Whether you need expert consultation, routine
+            check-ups, or specialized care, our platform connects you with
+            trusted professionals who are ready to prioritize your health. Your
+            care, your convenience—schedule now and take the first step towards
+            a healthier tomorrow!
           </p>
           <div className="flex justify-center">
             <Link href={session ? "/doctors/apply" : "/signin"}>
@@ -31,14 +33,14 @@ import { auth } from "../../auth";
           <Image
             className="object-cover object-center rounded"
             alt="hero"
-            height={400}
-            width={400}
-            src="https://images.unsplash.com/photo-1584982751601-97dcc096659c?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDV8fHxlbnwwfHx8fHw%3D"
+            height={350}
+            width={350}
+            src={heroImage}
           />
         </div>
       </div>
     </section>
   );
-};
+}
 
 export default HeroSection;
