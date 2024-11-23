@@ -1,5 +1,6 @@
 import connectDB from "@/lib/connectDB";
 import { AppointmentModal } from "@/lib/models/AppointmentModal";
+import { RequestModal } from "@/lib/models/RequestModal";
 export async function POST(req) {
   await connectDB();
   try {
@@ -31,21 +32,84 @@ export async function GET(req) {
   const query = {};
   const doctor = req?.nextUrl?.searchParams?.get("doctor");
   const user = req?.nextUrl?.searchParams?.get("user");
-  if (doctor) query.request = doctor;
+  const status = req?.nextUrl?.searchParams?.get("status");
+  const now = Date.now();
+  if (doctor) {
+    const doctorRequest = await RequestModal.findOne({ user: doctor });
+    query.doctor = doctorRequest._id;
+    console.log("Doctor ID:", doctor);
+  }
+
   if (user) query.user = user;
+  if (status && status !== "upcoming" && status !== "past") {
+    query.status = status;
+  }
+  if (status && status == "upcoming") {
+    query.date = { $gt: now };
+    query.status = "accepted";
+  }
+
+  if (status && status == "past") {
+    query.date = { $lt: now };
+    // query.status = "accepted";
+  }
+
+  const stats = {
+    accepted: await AppointmentModal.find({
+      status: "accepted",
+    }).countDocuments(),
+    cancelled: await AppointmentModal.find({
+      status: "cancelled",
+    }).countDocuments(),
+    pending: await AppointmentModal.find({
+      status: "pending",
+    }).countDocuments(),
+  };
+
+  console.log("Final Query:", query);
   const appointments = await AppointmentModal.find(query)
-  .populate("user")
-  .populate("request");
+    .populate("user")
+    .populate({
+      path: "request",
+      populate: { path: "user" }, // populate the user field inside request
+    });
+    console.log("Appointments Query Result:", appointments);
   return Response.json(
     {
       error: false,
       msg: "Appointments fetched Successfully",
       appointments,
+      stats,
     },
     { status: 200 }
   );
 }
 
-export async function PUT(req) {}
+export async function PUT(req) {
+  await connectDB();
+  try {
+    const { id, status } = await req.json();
+    const update = await AppointmentModal.findOneAndUpdate(
+      { _id: id },
+      { status: status }
+    ).exec();
+    return Response.json(
+      {
+        error: false,
+        msg: "Appointment updated successfully",
+        appointment: update,
+      },
+      { status: 201 }
+    );
+  } catch (err) {
+    return Response.json(
+      {
+        error: true,
+        msg: "Something went wrong",
+      },
+      { status: 400 }
+    );
+  }
+}
 
 export async function DELETE(req) {}

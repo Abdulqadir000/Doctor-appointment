@@ -8,16 +8,18 @@ import {
   MenubarTrigger,
 } from "@/components/ui/menubar";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { auth, signOut } from "../../auth";
 import Image from "next/image";
+import Link from "next/link";
 export default async function Navbar() {
   const session = await auth();
   return (
     <div className="shadow-md py-3">
       <div className="flex container mx-auto justify-between">
-        <h1 className="text-xl font-bold font-mono">Doctors</h1>
+        <Link href={"/"}>
+          <h1 className="text-xl font-bold font-mono">Doctors</h1>
+        </Link>
         {session ? (
           <Menubar>
             <MenubarMenu>
