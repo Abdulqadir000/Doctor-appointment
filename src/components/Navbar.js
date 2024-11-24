@@ -30,9 +30,9 @@ export default async function Navbar() {
 
   return (
     <nav className="border-b">
-      <div className="flex h-16 container mx-auto items-center justify-between">
+      <div className="flex h-16 container mx-auto items-center justify-between px-4 sm:px-6">
         <Link href="/" className="flex items-center">
-          <h1 className="text-xl font-bold font-mono">Doctors</h1>
+          <h1 className="text-xl font-bold font-mono">MediCare</h1>
         </Link>
 
         {session ? (
@@ -61,9 +61,7 @@ export default async function Navbar() {
                 </Link>
                 <MenubarSeparator />
                 <form action={logout}>
-                  <button 
-                  className="w-full text-left px-2 py-1.5 text-sm outline-none hover:bg-accent hover:text-accent-foreground cursor-default relative select-none rounded-sm"
-                  >
+                  <button className="w-full text-left px-2 py-1.5 text-sm outline-none hover:bg-accent hover:text-accent-foreground cursor-default relative select-none rounded-sm">
                     Logout
                   </button>
                 </form>
